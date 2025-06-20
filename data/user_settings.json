@@ -1,0 +1,17 @@
+{
+  "user": "Максим",
+  "cards": [
+    {
+      "name": "Название карты",
+      "number": "0000111122223456",
+      "cashback_categories": ["супермаркет", "аптека"],
+      "balance": 10000
+    }
+  ],
+  "portfolio": {
+    "AAPL": 5,
+    "GOOG": 2
+  },
+  "user_currencies": ["USD", "EUR"],
+  "user_stocks": ["AAPL", "GOOG"]
+}
