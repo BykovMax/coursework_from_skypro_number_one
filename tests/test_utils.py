@@ -1,7 +1,7 @@
 from datetime import datetime
 
 import pytest
-
+from unittest.mock import patch
 from src.utils import (calculate_cashback, get_exchange_rates, get_greeting, get_stock_info, load_transactions,
                        load_user_settings)
 
@@ -89,17 +89,26 @@ def test_calculate_cashback(sample_cards, sample_transactions):
 # ====== Тесты get_exchange_rates =======
 # =======================================
 
-def test_get_exchange_rates():
-    result = get_exchange_rates("RUB")
-    assert isinstance(result, dict)
-    assert set(["USD", "EUR", "RUB"]).issubset(result.keys())
+@patch("src.utils.requests.get")
+def test_get_exchange_rates_success(mock_get):
+    mock_get.return_value.status_code = 200
+    mock_get.return_value.json.return_value = {"rates": {"USD": 91.1, "EUR": 98.9}}
+
+    result = get_exchange_rates(base="RUB", symbols=["USD", "EUR"])
+    assert result == {"USD": 91.1, "EUR": 98.9, "RUB": 1}
 
 
-def test_get_exchange_rates_real():
-    result = get_exchange_rates("RUB")
-    assert isinstance(result, dict)
-    assert "USD" in result and "EUR" in result and "RUB" in result
-    assert all(isinstance(v, float | int) for v in result.values())
+@patch("src.utils.API_KEY", new=None)
+def test_get_exchange_rates_no_api_key():
+    result = get_exchange_rates(base="RUB", symbols=["USD", "EUR"])
+    assert result == {"USD": 90.0, "EUR": 90.0, "RUB": 1}
+
+
+@patch("src.utils.API_KEY", new="fake-key")
+@patch("src.utils.requests.get", side_effect=Exception("Ошибка запроса"))
+def test_get_exchange_rates_error(mock_get):
+    result = get_exchange_rates(base="RUB", symbols=["USD"])
+    assert result == {"USD": 90.0, "RUB": 1}
 
 
 # =====================================
