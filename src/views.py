@@ -1,12 +1,7 @@
 from datetime import datetime
 from typing import Any, Dict, List
 
-from src.utils import (
-    calculate_cashback,
-    get_greeting,
-    get_exchange_rates,
-    get_stock_info
-)
+from src.utils import calculate_cashback, get_exchange_rates, get_greeting, get_stock_info
 
 
 def homepage_view(date_str: str, user: Dict[str, Any], transactions: List[Dict[str, Any]]) -> Dict[str, Any]:
@@ -28,11 +23,11 @@ def homepage_view(date_str: str, user: Dict[str, Any], transactions: List[Dict[s
                 "name": card["name"],
                 "last_digits": card["number"][-4:],
                 "balance": card.get("balance", 0),
-                "cashback": cashback_info.get(card["number"][-4:], 0)
+                "cashback": cashback_info.get(card["number"][-4:], 0),
             }
             for card in cards
         ],
         "search_hint": "поиск по всему Excel-файлу",
         "currency_rates": exchange_rates,
-        "stock_prices": stock_data
+        "stock_prices": stock_data,
     }

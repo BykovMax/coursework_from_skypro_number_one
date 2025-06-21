@@ -1,6 +1,6 @@
-import json
+# import json
 import logging
-from datetime import datetime
+
 import pandas as pd
 
 logger = logging.getLogger(__name__)
@@ -14,16 +14,26 @@ def spendings_by_weekday(df: pd.DataFrame, date: str | None = None) -> dict:
         end = pd.to_datetime(date)
     else:
         end = pd.Timestamp.today()
-
     start = end - pd.Timedelta(days=30)
+
+    # Преобразуем даты и суммы
     df["Дата операции"] = pd.to_datetime(df["Дата операции"], errors="coerce", dayfirst=True)
+    df["Сумма операции"] = (
+        df["Сумма операции"]
+        .astype(str)
+        .str.replace(",", ".", regex=False)
+        .pipe(pd.to_numeric, errors="coerce")
+    )
 
-    # Фильтрация по периоду
     df_period = df[(df["Дата операции"] >= start) & (df["Дата операции"] <= end)]
-
-    # Отдельно только траты
     df_period = df_period[df_period["Сумма операции"] < 0].copy()
-    df_period["weekday"] = df_period["Дата операции"].dt.day_name(locale="ru_RU")
+
+    # Добавляем колонку с днями недели вручную
+    weekday_map = {
+        0: "Понедельник", 1: "Вторник", 2: "Среда", 3: "Четверг",
+        4: "Пятница", 5: "Суббота", 6: "Воскресенье"
+    }
+    df_period["weekday"] = df_period["Дата операции"].dt.dayofweek.map(weekday_map)
 
     result = df_period.groupby("weekday")["Сумма операции"].sum().abs().to_dict()
 
@@ -31,7 +41,6 @@ def spendings_by_weekday(df: pd.DataFrame, date: str | None = None) -> dict:
         "Понедельник", "Вторник", "Среда", "Четверг",
         "Пятница", "Суббота", "Воскресенье"
     ]
-
     result_json_ready = {
         day: round(result[day], 2)
         for day in WEEKDAYS if day in result

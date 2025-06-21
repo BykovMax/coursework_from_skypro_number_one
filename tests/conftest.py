@@ -1,7 +1,7 @@
 import json
 from unittest.mock import mock_open, patch
 
-import pandas as pd
+# import pandas as pd
 import pytest
 
 
@@ -10,21 +10,10 @@ def mock_user_file():
     fake_data = {
         "user": "Анна",
         "cards": [
-            {
-                "name": "Visa Classic",
-                "number": "1234567890123456",
-                "cashback_categories": ["супермаркет"]
-            },
-            {
-                "name": "Mastercard Black",
-                "number": "9876543210987654",
-                "cashback_categories": ["рестораны"]
-            }
+            {"name": "Visa Classic", "number": "1234567890123456", "cashback_categories": ["супермаркет"]},
+            {"name": "Mastercard Black", "number": "9876543210987654", "cashback_categories": ["рестораны"]},
         ],
-        "portfolio": {
-            "AAPL": 1,
-            "GOOG": 2
-        }
+        "portfolio": {"AAPL": 1, "GOOG": 2},
     }
     with patch("builtins.open", mock_open(read_data=json.dumps(fake_data))):
         yield
@@ -60,7 +49,7 @@ def mock_transactions_df():
 def sample_cards():
     return [
         {"name": "Visa Classic", "number": "1234567890123456", "cashback_categories": []},
-        {"name": "Mastercard Black", "number": "9876543210987654", "cashback_categories": []}
+        {"name": "Mastercard Black", "number": "9876543210987654", "cashback_categories": []},
     ]
 
 
@@ -71,8 +60,9 @@ def sample_transactions():
         {"Сумма операции": -500.0, "Номер карты": "*3456"},
         {"Сумма операции": -200.0, "Номер карты": "*7654"},
         {"Сумма операции": -300.0, "Номер карты": "*7654"},
-        {"Сумма операции": -100.0, "Номер карты": "*0000"}
+        {"Сумма операции": -100.0, "Номер карты": "*0000"},
     ]
+
 
 @pytest.fixture
 def sample_user():
@@ -80,9 +70,9 @@ def sample_user():
         "user": "Максим",
         "cards": [
             {"name": "Visa Classic", "number": "1234567890123456", "balance": 10000},
-            {"name": "Mastercard", "number": "9876543210987654", "balance": 5000}
+            {"name": "Mastercard", "number": "9876543210987654", "balance": 5000},
         ],
         "portfolio": {"AAPL": 1, "GOOG": 2, "YNDX": 3},
         "user_currencies": ["USD"],
-        "user_stocks": ["AAPL", "GOOG"]
+        "user_stocks": ["AAPL", "GOOG"],
     }

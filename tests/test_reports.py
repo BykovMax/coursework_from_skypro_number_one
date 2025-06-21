@@ -1,11 +1,12 @@
-import pytest
 import pandas as pd
-from src.reports import spendings_by_weekday
+import pytest
 
+from src.reports import spendings_by_weekday
 
 # ==============================================
 # ====== Тесты spendings_by_weekday (отчёт) =====
 # ==============================================
+
 
 @pytest.mark.parametrize(
     "date, expected_days",
