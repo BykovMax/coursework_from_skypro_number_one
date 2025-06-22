@@ -13,5 +13,7 @@
     "GOOG": 2
   },
   "user_currencies": ["USD", "EUR"],
-  "user_stocks": ["AAPL", "GOOG"]
+  "user_stocks": ["AAPL", "AMZN", "GOOGL", "MSFT", "TSLA"],
+  "rounding_limit": 50,
+  "investment_month": "2025-06"
 }

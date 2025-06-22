@@ -855,7 +855,7 @@ version = "1.3.0"
 description = "Library to create spreadsheet files compatible with MS Excel 97/2000/XP/2003 XLS files, on any platform, with Python 2.6, 2.7, 3.3+"
 optional = false
 python-versions = "*"
-groups = ["dev"]
+groups = ["main", "dev"]
 files = [
     {file = "xlwt-1.3.0-py2.py3-none-any.whl", hash = "sha256:a082260524678ba48a297d922cc385f58278b8aa68741596a87de01a9c628b2e"},
     {file = "xlwt-1.3.0.tar.gz", hash = "sha256:c59912717a9b28f1a3c2a98fd60741014b06b043936dcecbc113eaaada156c88"},
@@ -864,4 +864,4 @@ files = [
 [metadata]
 lock-version = "2.1"
 python-versions = ">=3.13"
-content-hash = "94de407a22a6b78985e94cf86e8e815059f9f5cdd47df2d765c10d5df73674df"
+content-hash = "07af9b96a37db43e731b6ccb5dcaa39ed3f9bc1294f7e06fa520756fde5ea8fc"

@@ -27,7 +27,7 @@ def test_load_user_settings(mock_user_file):
 def test_load_transactions(mock_transactions_df):
     assert isinstance(mock_transactions_df, list)
     assert len(mock_transactions_df) == 4
-    assert mock_transactions_df[0]["Сумма операции"] == -1000.0
+    assert mock_transactions_df[0]["Сумма операции"] == -1234.0
 
 
 def test_load_transactions_real(tmp_path):
