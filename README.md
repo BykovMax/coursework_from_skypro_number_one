@@ -23,11 +23,12 @@ python main.py
 
 ## ⚙️ Режимы запуска (main.py)
 
-| Команда                       | Что делает                              |
-|-------------------------------|-----------------------------------------|
-| `python main.py`              | запуск страницы «Главная»               |
-| `python main.py search`       | поиск по транзакциям (simple_search)    |
-| `python main.py weekday`      | отчёт «Траты по дням недели» за 30 дней |
+| Команда                     | Что делает                                                                      |
+|-----------------------------|---------------------------------------------------------------------------------|
+| `python main.py`            | запуск страницы «Главная»                                                       |
+| `python main.py search`     | поиск по транзакциям (simple_search)                                            |
+| `python main.py weekday`    | отчёт «Траты по дням недели» за 30 дней                                         |
+| `python main.py investment` | инвесткопилка округляет каждую трату до ближайшего лимита (например, до 100 ₽). |
 
 
 ## 🧪 Тесты
@@ -43,36 +44,24 @@ coverage html
 
 ## 📸 Скриншот результата
 
-![Пример](images/example_output.png)
+- пример запуска python main.py  
 
-## 🧾 Пример JSON-ответа
+![run_python_main.py.png.png](images/run_python_main.py.png.png)
 
-```json
-{
-  "greeting": "Доброе утро, Максим!",
-  "cards": [
-    {
-      "name": "Visa Classic",
-      "last_digits": "3456",
-      "balance": 10000,
-      "cashback": 12.5
-    }
-  ],
-  "search_hint": "поиск по всему Excel-файлу",
-  "currency_rates": {
-    "USD": 89.5,
-    "EUR": 96.2,
-    "RUB": 1
-  },
-  "stock_prices": {
-    "AAPL": {
-      "price": 190.0,
-      "amount": 5,
-      "total_value": 950.0
-    }
-  }
-}
-```
+- пример запуска python main.py search  
+
+![start_run_search.png](images/start_run_search.png)
+![end_run_search.png](images/end_run_search.png)
+
+- пример запуска python main.py weekday
+
+![run_weekday.png](images/run_weekday.png)
+
+- пример запуска python main.py investment
+
+![run_investment.png](images/run_investment.png)
+
+
 
 ## 📁 Структура проекта
 
@@ -89,7 +78,7 @@ coverage html
     {
       "name": "Название карты",
       "number": "0000111122223456",
-      "cashback_categories": ["супермаркет", "аптека"],
+      "cashback_categories": ["Ваша категория", "Ваша категория"],
       "balance": 10000
     }
   ],
@@ -99,5 +88,39 @@ coverage html
   },
   "user_currencies": ["USD", "EUR"],
   "user_stocks": ["AAPL", "GOOG"]
+  "rounding_limit": 50,
+  "investment_month": "YYYY-MM"
 }
+```
+## 💰 Инвесткопилка
+
+Функция `investment_bank` рассчитывает, сколько можно отложить на инвестиции за выбранный месяц, округляя каждую трату до ближайшего лимита (например, до 100 ₽).
+
+### 🔧 Настройки
+
+Все параметры настраиваются через файл [`data/user_settings.json`](data/user_settings.json):
+
+```json
+{
+  "investment_month": "2025-06",
+  "rounding_limit": 100
+}
+```
+
+- `investment_month` — месяц в формате `ГГГГ-ММ` (например, `"2025-06"`).
+- `rounding_limit` — до какой суммы округлять каждую покупку (по умолчанию 100).
+
+### ▶️ Как запустить
+
+Чтобы рассчитать сумму инвесткопилки:
+
+```bash
+python main.py investment
+```
+
+Вывод будет таким:
+
+```
+2025-06-22 17:37:42 | INFO | Расчёт инвесткопилки за 2025-06 с округлением до 100 ₽
+💰 Инвесткопилка: отложено 3450.0 ₽
 ```

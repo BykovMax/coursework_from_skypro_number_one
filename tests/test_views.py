@@ -4,6 +4,10 @@ import pytest
 
 from src.views import homepage_view
 
+# ==================================
+# ====== Тесты homepage_view =======
+# ==================================
+
 
 @pytest.mark.parametrize(
     "date_str, expected_greeting",
