@@ -1,14 +1,15 @@
 from datetime import datetime
+from unittest.mock import patch
 
 import pytest
-from unittest.mock import patch
+
 from src.utils import (calculate_cashback, get_exchange_rates, get_greeting, get_stock_info, load_transactions,
                        load_user_settings)
-
 
 # =======================================
 # ====== Тесты load_user_settings =======
 # =======================================
+
 
 def test_load_user_settings(mock_user_file):
     result = load_user_settings("data/user_settings.json")
@@ -21,6 +22,7 @@ def test_load_user_settings(mock_user_file):
 # ======================================
 # ====== Тесты load_transactions =======
 # ======================================
+
 
 def test_load_transactions(mock_transactions_df):
     assert isinstance(mock_transactions_df, list)
@@ -61,6 +63,7 @@ def test_load_transactions_xlsx(tmp_path):
 # ====== Тесты get_greeting ======
 # ================================
 
+
 @pytest.mark.parametrize(
     "name, time, expected_greeting",
     [
@@ -80,6 +83,7 @@ def test_get_greeting(name, time, expected_greeting):
 # ====== Тесты calculate_cashback ======
 # =======================================
 
+
 def test_calculate_cashback(sample_cards, sample_transactions):
     result = calculate_cashback(sample_cards, sample_transactions)
     assert result == {"3456": 15.0, "7654": 5.0}
@@ -88,6 +92,7 @@ def test_calculate_cashback(sample_cards, sample_transactions):
 # =======================================
 # ====== Тесты get_exchange_rates =======
 # =======================================
+
 
 @patch("src.utils.requests.get")
 def test_get_exchange_rates_success(mock_get):
@@ -115,13 +120,14 @@ def test_get_exchange_rates_error(mock_get):
 # ====== Тесты get_stock_info =========
 # =====================================
 
+
 @pytest.mark.parametrize(
     "portfolio, expected_total",
     [
         ({"AAPL": 1}, 190.0),
         ({"GOOG": 2}, 5600.0),
         ({"TSLA": 3}, 300.0),
-    ]
+    ],
 )
 def test_get_stock_info(portfolio, expected_total):
     result = get_stock_info(portfolio)

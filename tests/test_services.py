@@ -1,10 +1,11 @@
 import pytest
-from src.services import simple_search
 
+from src.services import simple_search
 
 # ===============================
 # ====== Тесты simple_search =====
 # ===============================
+
 
 @pytest.fixture
 def sample_transactions():

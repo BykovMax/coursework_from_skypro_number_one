@@ -1,7 +1,7 @@
-import csv
+# import csv
 import json
-import os
 import logging
+import os
 from datetime import datetime
 from typing import Any, Dict, List
 
@@ -11,10 +11,7 @@ from dotenv import load_dotenv
 
 # === Настройка логирования ===
 logger = logging.getLogger(__name__)
-logging.basicConfig(
-    level=logging.INFO,
-    format="%(asctime)s | %(levelname)s | %(message)s"
-)
+logging.basicConfig(level=logging.INFO, format="%(asctime)s | %(levelname)s | %(message)s")
 
 
 # === Загрузка переменных окружения ===
@@ -104,6 +101,7 @@ def get_exchange_rates(base: str = "RUB", symbols: list[str] = None) -> Dict[str
         logger.error(f"Ошибка API. Возвращается заглушка: {e}")
         return {symbol: 90.0 for symbol in symbols} | {base: 1}
 
+
 def get_stock_info(portfolio: Dict[str, int], allowed_stocks: list[str] = None) -> Dict[str, Any]:
     """Фильтрует портфель по user_stocks и возвращает информацию."""
     logger.info(f"Получение информации по акциям: {portfolio}")
@@ -114,9 +112,5 @@ def get_stock_info(portfolio: Dict[str, int], allowed_stocks: list[str] = None) 
         if allowed_stocks and stock not in allowed_stocks:
             continue
         price = dummy_prices.get(stock, 100.0)
-        result[stock] = {
-            "price": price,
-            "amount": qty,
-            "total_value": round(price * qty, 2)
-        }
+        result[stock] = {"price": price, "amount": qty, "total_value": round(price * qty, 2)}
     return result
